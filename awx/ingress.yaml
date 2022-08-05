@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: awxingress
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "36000"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "36000"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "36000"
+    nginx.ingress.kubernetes.io/proxy-next-upstream-timeout: "36000"
+#    nginx.ingress.kubernetes.io/server-snippet: "keepalive_timeout 36000s;client_body_timeout 36000s;client_header_timeout 36000s;"
+spec:
+  rules:
+  - host: awxtest.np-rancher.shwaks.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+           name: awx-demo-service
+           port:
+             number: 80
+  tls:
+  - hosts:
+     - awxtest.np-rancher.shwaks.com
+
